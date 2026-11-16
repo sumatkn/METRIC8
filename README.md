@@ -1,2 +1,34 @@
 # METRIC8
-METRIC8 - Suite of addons for minimalistic WoW: Forever. Simple. Informational. Minimalistic.
+
+**Simple. Informational. Minimalistic.**
+
+METRIC8 is the umbrella suite and development home for WoW: Forever addons and supporting tools. This repository keeps suite governance and shared planning alongside a dedicated section for every included project.
+
+**Status:** repository foundation and requirements. No playable addon or downloadable release is included yet.
+
+## Start here
+
+- [Suite scope](docs/SCOPE.md)
+- [Project list](docs/PROJECTS.md)
+- [Rules of engagement](docs/RULES_OF_ENGAGEMENT.md)
+- [Approved procedures and proposed workflows](docs/PROCEDURES.md)
+- [Working memory](docs/memory/CURRENT.md)
+- [Decision register](docs/DECISIONS.md)
+- [Contributor and agent instructions](AGENTS.md)
+
+## Repository sections
+
+| Location | Purpose |
+| --- | --- |
+| `docs/` | Suite scope, project registry, governance, decisions, and working memory |
+| `addons/<project-id>/` | Each in-game addon's source, docs, assets, and distribution files |
+| `tools/<project-id>/` | Each supporting tool's source, docs, assets, and distribution files |
+| `templates/project/` | Starting structure for an addon or tool |
+
+Start with the [Range Indicator](addons/range-indicator/README.md), currently at requirements stage. Other projects are tracked in the [project list](docs/PROJECTS.md).
+
+Each project has a `dist/` section for installable ZIPs, binaries where applicable, and a download index. Empty sections explicitly mean that files have not been imported or built. Suite membership does not by itself impose a shared runtime or dependency.
+
+## License
+
+Original repository content uses the existing [MIT license](LICENSE). Imported code, artwork, and datasets retain their own licenses and attribution requirements; inclusion does not relicense them.
