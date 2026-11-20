@@ -1,6 +1,6 @@
 # Suite working memory
 
-Updated: 2026-11-16.
+Updated: 2026-11-20.
 
 ## Current objective
 
@@ -11,6 +11,8 @@ Establish METRIC8 as the umbrella repository with consistent addon/tool sections
 The public repository contained README.md and an MIT LICENSE only. There was no addon source, package, build configuration, or existing repository instruction file.
 
 ## Current state
+
+- Follow [P-004](../PROCEDURES.md#p-004-forever-compatibility-review) before addon work. The November 20 baseline is Forever build 71037. The realm-name report remains unverified in our client.
 
 - Suite scope, project registry, collaboration rules, procedure register, decision register, and contributor instructions are established.
 - A reusable project template defines source, docs, assets, and distribution sections.
