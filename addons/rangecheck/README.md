@@ -14,11 +14,11 @@ One movable, scalable icon shows the current target's range for selected attacks
 | `NONE` | No target selected. |
 | `N/A` | The selected target is dead or cannot be attacked. |
 
-Hunters use learned Wing Clip for melee and Auto Shot for ranged weapon range. If Wing Clip is unavailable, or Auto Shot cannot distinguish too close from too far, a result may remain Unknown.
+Hunters use the client’s main-hand auto-attack range query for melee and Auto Shot for ranged weapon range. The melee check requires no learned ability or action-bar slot. If the client withholds melee range, or Auto Shot cannot distinguish too close from too far, a result may remain Unknown.
 
 Range is based on the client’s spell checks. A white `LOS!` label on a dark red background in the upper-right corner shows a recent line-of-sight error from WoW independently of the range label. The badge clears after three seconds or a target change. The UI error does not identify the affected unit, and an empty corner means no recent error was observed. RangeCheck does not start attacks or check facing.
 
-The text beneath the icon shows measured distance in meters when available. `~` marks a band estimated from a successful spell range check and `— m` means the client did not provide usable distance evidence. Hunter melee prefers the native range result for Wing Clip when it is on an action bar and falls back to the spellbook check.
+The text beneath the icon shows measured distance in meters when available. `~` marks a band estimated from a successful spell range check and `— m` means the client did not provide usable distance evidence.
 
 ## Commands
 

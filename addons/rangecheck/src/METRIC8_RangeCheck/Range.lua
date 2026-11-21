@@ -2,13 +2,14 @@ local _, addon = ...
 
 -- Seed IDs identify spell families. Resolve a learned spellbook entry by localized name.
 local melee = "melee"
+local mainHand = "main hand"
 local spell = "spell"
 local ranged = "ranged"
 local wand = "wand"
 local presets = {
     WARRIOR = { { 78, melee } },                           -- Heroic Strike
     PALADIN = { { 20271, spell } },                       -- Judgement
-    HUNTER = { { 2974, melee }, { 75, ranged } },          -- Wing Clip, Auto Shot
+    HUNTER = { { mainHand, melee }, { 75, ranged } },      -- Main-hand auto-attack, Auto Shot
     ROGUE = { { 1752, melee } },                          -- Sinister Strike
     PRIEST = { { 589, spell }, { 5019, wand } },           -- Shadow Word: Pain, Shoot
     SHAMAN = { { 403, spell } },                          -- Lightning Bolt
@@ -35,19 +36,13 @@ function addon.GetPlayerClass()
     end
 end
 
--- Read the action slot's range state, never its visual tint or activation state.
-local function probeAction(seed)
-    local bar = C_ActionBar or {}
-    local slots = read("table", bar.FindSpellActionButtons, seed)
-    if not slots or #slots == 0 then return nil, "no Wing Clip slot" end
-    for _, value in ipairs(slots) do
-        local slot = readable(value, "number")
-        if slot and read("boolean", bar.HasRangeRequirements, slot) == true then
-            local result = read("boolean", bar.IsActionInRange, slot, "target")
-            if result ~= nil then return result end
-        end
-    end
-    return nil, "Wing Clip slot gave no usable result"
+local function probeMainHand()
+    local swing = C_SwingTimer
+    local swingTypes = Enum and Enum.PlayerSwingType
+    if not swing or not swingTypes then return nil end
+    local hand = readable(swingTypes.MainHand, "number")
+    if hand == nil then return nil end
+    return read("boolean", swing.IsTargetWithinSwingRange, hand)
 end
 
 local function probeSpell(seed)
@@ -126,17 +121,15 @@ function addon.GetRangeStatus(class, details)
         if kind == ranged or kind == wand then equipment = rangedEquipment() end
         if kind == melee or kind == spell or equipment == kind then
             local seed = probe[1]
-            local result, id, actionNote
-            local source = "spellbook"
-            if class == "HUNTER" and kind == melee then result, actionNote = probeAction(seed) end
-            if result == nil then
-                result, id = probeSpell(seed)
+            local result, id
+            if seed == mainHand then
+                result = probeMainHand()
             else
-                source = "action bar"
+                result, id = probeSpell(seed)
             end
             if details then
-                local note = actionNote and (" [" .. actionNote .. "]") or ""
-                details[#details + 1] = kind .. " (" .. seed .. ", " .. source .. ")=" .. tostring(result) .. note
+                local source = seed == mainHand and "native auto-attack" or ("spellbook " .. seed)
+                details[#details + 1] = kind .. " (" .. source .. ")=" .. tostring(result)
             end
             if result == true then
                 if not details then return kind, id end

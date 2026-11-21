@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Replaced the Hunter melee ability probe with Forever’s native main-hand auto-attack range query.
+
 - Added the native Wing Clip action-bar range check for Hunters.
 - Added a distance readout in meters with estimated bands or unavailable state, and improved LOS badge contrast and visibility.
 
