@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5
+
+Replace the four starter songs with the 16-entry research catalog. Reference-only entries can be copied into the editor.
+
 ## 0.1.4
 
 Start and Next Verse use a player-clicked WoW macro action. Rehearsal remains private. The performance window hides during combat.

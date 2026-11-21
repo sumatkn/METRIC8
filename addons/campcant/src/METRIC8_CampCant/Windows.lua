@@ -78,8 +78,10 @@ local function refresh()
     book.index:SetText(("Song %d of %d"):format(selected, total))
     book.prev:SetEnabled(selected > 1)
     book.next:SetEnabled(selected < total)
-    book.line:SetText(C.raceLine(song.verses[page][1], page, C.db.voice))
-    book.page:SetText(("Verse %d / %d"):format(page, #song.verses))
+    local verse = song.verses[page]
+    book.line:SetText(verse and C.raceLine(verse[1], page, C.db.voice) or "No verified transcription. Use Edit a copy to add your own verses.")
+    book.rehearse:SetEnabled(verse ~= nil)
+    book.page:SetText(verse and ("Verse %d / %d"):format(page, #song.verses) or "Reference")
     book.back:SetEnabled(page > 1)
     book.forward:SetEnabled(page < #song.verses)
 
@@ -113,6 +115,7 @@ local function openEditor(copy)
     draft = {title = source and source.title or "", verses = {}}
     if source then
         for i, v in ipairs(source.verses) do draft.verses[i] = {v[1]} end
+        if #draft.verses == 0 then draft.verses[1] = {""} end
         if not editing then draft.title = draft.title .. " (my version)" end
     else
         draft.verses[1] = {""}
@@ -165,7 +168,7 @@ local function build()
     book.back = button(book, 16, 214, 34, "<", function() page=page-1; refresh() end)
     book.page = label(book, 60, 220, 104)
     book.forward = button(book, 170, 214, 34, ">", function() page=page+1; refresh() end)
-    button(book, 16, 260, 132, "Rehearse privately", function() play(false) end)
+    book.rehearse = button(book, 16, 260, 132, "Rehearse privately", function() play(false) end)
     button(book, 158, 260, 132, "Select song", function() play(true) end)
 
     editor = panel("METRIC8_CampCantEditor", 460, 288, 0)

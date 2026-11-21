@@ -1,7 +1,7 @@
 ## Interface: 16001
 ## Title: METRIC8: CampCant
 ## Notes: A campfire songbook for manual verses and live performances.
-## Version: 0.1.4
+## Version: 0.1.5
 ## SavedVariables: METRIC8_CampCantDB
 
 Songbook.lua

@@ -1,23 +1,21 @@
 local name, C = ...
 C.builtins = {
-    { title = "Dark Iron Brewfest Song (excerpt)", credit = "Dark Iron Herald at Brewfest", verses = {
-        {"We've come ta drink yer brew!"},
-    }},
-    { title = "I Kill Two Dwarves (excerpt)", credit = "Retired male troll /silly", verses = {
-        {"I kill two dwarves in the morning"},
-    }},
-    { title = "The Last Zepp out of Brill", credit = "Original Undercity travel song", verses = {
-        {"The tower bell rang in the Tirisfal rain. I ran with a boot half tied."},
-        {"My boot made the deck of the Orgrimmar zepp. The rest of me missed the ride."},
-        {"If you see one boot on a goblin's stall, with a fine brass buckle still bright,"},
-        {"Tell him the left one's waiting in Brill for the first flight back tonight."},
-    }},
-    { title = "Crossroads Watch", credit = "Original Barrens call and response", verses = {
-        {"Who keeps watch by the Crossroads fire? A plainstrider pecking the pot."},
-        {"Who took the road by the Merchant Coast? The runner whose hearth we forgot."},
-        {"Bank up the coals till his boots come home. Leave one bowl out of the stack."},
-        {"There's dust on the road and a shape in the dusk. Pass it along: he's back."},
-    }},
+    { title = "I Kill Two Dwarves", credit = "Excerpt · retired male troll /silly", verses = {{"I kill two dwarves in the morning"}} },
+    { title = "Dark Iron Song", credit = "Excerpt · the Dark Iron Herald's Brewfest raid", verses = {{"We've come ta drink yer brew!"}} },
+    { title = "Thunderbrew", credit = "Excerpt · Grimbooze Thunderbrew's Westfall quest rhyme", verses = {{"For Thunderbrew Lager comes in a keg!"}} },
+    { title = "Lament of the Highborne", credit = "Excerpt · Sylvanas and the Highborne Lamenters", verses = {{"Anar'alah, anar'alah belore"}} },
+    { title = "O Thanagor", credit = "Excerpt · the recurring Arthas vocal theme", verses = {{"An Karanir Thanagor"}} },
+    { title = "The Traveler's Path", credit = "Song of Liu Lang · lyrics unverified", verses = {} },
+    { title = "Song of the Vale", credit = "Excerpt · the Jade Forest quest scroll", verses = {{"Where every hearth brings peaceful ease"}} },
+    { title = "Daughter of the Sea", credit = "Excerpt · Kul Tiran shanty about Jaina Proudmoore", verses = {{"Beware, beware the Daughter of the Sea."}} },
+    { title = "Abby Lewis's rhymes", credit = "Excerpt · Glenbrook Homestead, Drustvar", verses = {{"Miss Mary turned her back on us"}} },
+    { title = "Nightsong", credit = "Excerpt · night elf vocal theme", verses = {{"Elune adore"}} },
+    { title = "Power of the Horde", credit = "Excerpt · Elite Tauren Chieftain", verses = {{"I am the son of the wind and rain"}} },
+    { title = "Rogues Do it from Behind", credit = "Excerpt · Elite Tauren Chieftain", verses = {{"I love to one shot mages"}} },
+    { title = "I Am Murloc", credit = "Excerpt · Elite Tauren Chieftain", verses = {{"I am more than a fish"}} },
+    { title = "Lament of Captain Placeholder", credit = "Excerpt · Eledainn; later covered by Cranius", verses = {{"Farewell to thee, Placeholder"}} },
+    { title = "Darrowshire", credit = "Excerpt · Cranius", verses = {{"I think he went off to war"}} },
+    { title = "I'm a Medieval Man", credit = "Excerpt · Warcraft II bonus track", verses = {{"I'm a Medieval Man"}} },
 }
 
 local voices = {
