@@ -24,6 +24,7 @@ Enter `/rangecheck` for help. Use the commands in the table after `/rangecheck`.
 
 | Command | Effect |
 | --- | --- |
+| `debug on`, `debug off` | Start or stop reporting changes in range results and new line-of-sight errors in chat. Debug mode is off after reload. |
 | `status` | Print the loaded addon version, current range state and available probe results in chat. |
 | `unlock`, `lock` | Enable left-dragging or lock the icon. |
 | `scale 1.25` | Set scale from 0.5 to 2. Use `scale inherit` to clear it. |

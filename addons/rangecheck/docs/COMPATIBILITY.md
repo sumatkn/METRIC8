@@ -19,6 +19,8 @@ The maintainer saw a ranged indication on a Hunter and reported difficulty disti
 
 RangeCheck listens to `UI_ERROR_MESSAGE` and recognizes the client's localized line-of-sight error text. The event supplies an error and has no unit argument. The corner badge reports a recent error for two seconds and clears when the target changes. The client export did not expose a continuous target line-of-sight query. A quiet auto-attack cannot establish why no damage occurred. Forever addon authors also report that passive range reads for Attack (6603) and next-swing attacks can give false positives, so the Hunter melee probe remains Wing Clip. The reported X does not match a bundled 0.1.1 label; `/rangecheck status` reports the loaded version, computed status and probe results for follow-up. Source review only for this revision. [Forever melee observations](https://github.com/wealdly/JustAC/blob/main/BlizzardAPI/StateHelpers.lua)
 
+In 0.1.3-dev, `/rangecheck debug on` prints one initial snapshot and prints again when the target or normalized probe results change. It reports the melee and ranged probes even if one has already confirmed range. Initial and changed line-of-sight errors are reported separately while repeats inside the badge window are suppressed. No further API changes were needed.
+
 ## In-game smoke test pending
 
 1. Confirm `/dump GetBuildInfo()` and `/dump select(4, GetBuildInfo())`, then install from source and check login for Lua errors.

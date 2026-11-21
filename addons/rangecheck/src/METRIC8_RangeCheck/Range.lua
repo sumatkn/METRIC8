@@ -87,6 +87,7 @@ function addon.GetRangeStatus(class, details)
     local preset = presets[class]
     if not preset then return "unknown" end
     local checked, uncertain = false, false
+    local positive
     for _, probe in ipairs(preset) do
         local kind = probe[2]
         local equipment
@@ -96,8 +97,14 @@ function addon.GetRangeStatus(class, details)
             if details then
                 details[#details + 1] = kind .. " (" .. probe[1] .. ")=" .. tostring(result)
             end
-            if result == true then return kind end
-            if result == false then checked = true else uncertain = true end
+            if result == true then
+                if not details then return kind end
+                positive = positive or kind
+            elseif result == false then
+                checked = true
+            else
+                uncertain = true
+            end
         else
             if details then
                 details[#details + 1] = kind .. " equipment=" .. tostring(equipment)
@@ -105,6 +112,7 @@ function addon.GetRangeStatus(class, details)
             if not equipment then uncertain = true end
         end
     end
+    if positive then return positive end
     if checked and not uncertain then return "out" end
     return "unknown"
 end

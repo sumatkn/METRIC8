@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added opt-in `/rangecheck debug on` to log changes in target eligibility and range responses, plus recent line-of-sight errors, without repeating unchanged results.
+
 - Added a separate corner badge for recent client-reported line-of-sight errors and `/rangecheck status` for Hunter range diagnostics.
 
 - Updated 0.1.1-dev to use Wing Clip as the Hunter melee probe, keeping Auto Shot for ranged checks.

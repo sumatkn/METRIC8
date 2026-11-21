@@ -2,6 +2,11 @@ local addonName, addon = ...
 local events = CreateFrame("Frame")
 local class, profile, lastStatus
 local sightWarning = 0
+local debugging, lastDebugOutput = false, nil
+
+local function message(line)
+    print("RangeCheck: " .. line)
+end
 
 local function clearSightWarning()
     sightWarning = 0
@@ -12,13 +17,24 @@ local function noteError(errorText)
     if issecretvalue and issecretvalue(errorText) then return end
     if type(errorText) ~= "string" or errorText == "" then return end
     if errorText == SPELL_FAILED_LINE_OF_SIGHT or errorText == ERR_LINE_OF_SIGHT then
+        if debugging and sightWarning <= 0 then message("debug | WoW reported a line-of-sight error") end
         sightWarning = 2
         addon.ShowSightWarning(true)
     end
 end
 
 local function update()
-    local status = addon.GetRangeStatus(class)
+    local details = debugging and {} or nil
+    local status = addon.GetRangeStatus(class, details)
+    if details then
+        local output = table.concat(details, " | ")
+        if output ~= "" then output = " | " .. output end
+        output = status .. output
+        if output ~= lastDebugOutput then
+            lastDebugOutput = output
+            message("debug | " .. output)
+        end
+    end
     if status ~= lastStatus then
         lastStatus = status
         addon.RenderIcon(addon.GetTheme(profile.theme), profile.mode, status)
@@ -32,12 +48,15 @@ local function applyProfile()
     update()
 end
 
-local function message(line)
-    print("RangeCheck: " .. line)
-end
-
 local function options(input)
     local command, value = input:lower():match("^%s*(%S*)%s*(.-)%s*$")
+    if command == "debug" and (value == "on" or value == "off") then
+        debugging = value == "on"
+        lastDebugOutput = nil
+        message("debug " .. value)
+        if debugging then update() end
+        return
+    end
     if command == "status" then
         local details = {}
         local status = addon.GetRangeStatus(class, details)
@@ -88,7 +107,7 @@ local function options(input)
     elseif command == "mode" and (value == "auto" or value == "overlay" or value == "replace" or value == "inherit") then
         if value == "inherit" then target.mode = nil else target.mode = value end
     else
-        message("/rangecheck status | unlock | lock [inherit] | resetpos | scale <0.5-2|inherit> | mode <auto|overlay|replace|inherit>")
+        message("/rangecheck status | debug <on|off> | unlock | lock [inherit] | resetpos | scale <0.5-2|inherit> | mode <auto|overlay|replace|inherit>")
         message("/rangecheck override <on|off> | [global|class|char] theme <id|inherit>")
         return
     end
@@ -125,7 +144,10 @@ events:SetScript("OnEvent", function(self, event, _, errorText)
     elseif event == "UI_ERROR_MESSAGE" then
         noteError(errorText)
     else
-        if event == "PLAYER_TARGET_CHANGED" then clearSightWarning() end
+        if event == "PLAYER_TARGET_CHANGED" then
+            clearSightWarning()
+            lastDebugOutput = nil
+        end
         update()
     end
 end)
