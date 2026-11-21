@@ -10,7 +10,9 @@
 | D-006 | 2026-11-20 | Apply the Forever compatibility review before addon work (P-004) | Confirmed by maintainer |
 | D-007 | 2026-11-21 | Include METRIC8: NoTHX in the suite, starting with the unspent talent points reminder | Confirmed by maintainer request |
 | D-CampCant | 2026-11-21 | Include METRIC8: CampCant in the suite | Confirmed by maintainer request |
+| D-008 | 2026-11-16 | Include the addon in METRIC8; official name **METRIC8: RangeCheck**, short name **RangeCheck**, path `addons/rangecheck/` | Confirmed by explicit maintainer requests; supersedes proposed membership and former working name |
+| D-009 | 2026-11-16 | RangeCheck class defaults with optional character overrides; theme defaults with user presentation override; advanced functionality configuration deferred | Confirmed by maintainer requirements decisions |
 
-Project-specific requirements belong in each project's documentation. Initial Range Indicator requirements are captured [here](../addons/range-indicator/docs/REQUIREMENTS.md); their capture does not settle suite membership or naming.
+Project-specific requirements belong in each project's documentation. Confirmed RangeCheck requirements are captured [here](../addons/rangecheck/docs/REQUIREMENTS.md).
 
 For a new decision record: ID, date, decision, status, authority/evidence, rationale if useful, and any decision superseded.

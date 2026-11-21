@@ -16,7 +16,7 @@ The public repository contained README.md and an MIT LICENSE only. There was no 
 
 - Suite scope, project registry, collaboration rules, procedure register, decision register, and contributor instructions are established.
 - A reusable project template defines source, docs, assets, and distribution sections.
-- Range Indicator has a requirements-only section based on the supplied discussion context.
+- [METRIC8: RangeCheck](../../addons/rangecheck/README.md) is a confirmed suite member with requirements only, no source code or build.
 - Database tooling is listed as a candidate; its previous files and architecture have not been imported.
 - [METRIC8: NoTHX](../../addons/nothx/README.md) implements the unspent talent reminder filter. The maintainer confirmed 0.1.0 in game.
 - [METRIC8: CampCant](../../addons/campcant/README.md) 0.1.6 ships ten songs and 156 verses. Mock playback passed. The maintainer confirmed 0.1.6 works in game.
@@ -30,18 +30,18 @@ The public repository contained README.md and an MIT LICENSE only. There was no 
 
 ## Open questions
 
-1. Confirm the initial suite roster and product names.
+1. Confirm the remaining suite roster and names (RangeCheck, CampCant, NoTHX confirmed).
 2. Choose GitHub Release assets or committed distribution files.
 3. Choose whether substantive changes require a pull request.
 4. Verify the target client/build before implementation.
 
 ## Next action
 
-Resolve the initial roster and distribution policy, then import the selected project's actual files or continue its requirements. Read its current source material before importing any prior work.
+Continue RangeCheck requirements one component at a time. Address remaining roster and distribution policy separately. Before implementation, follow P-004.
 
 ## Validation and limits
 
-Foundation validation covers relative documentation links and preservation of the existing license. See project memory for addon-specific verification.
+RangeCheck path and naming reconciled 2026-11-21; documentation-only, no client or gameplay testing. Foundation validation also covers links and existing license; see project memory.
 
 ## Handoff maintenance
 
