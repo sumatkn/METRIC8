@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+Start and Next Verse use a player-clicked WoW macro action. Rehearsal remains private. The performance window hides during combat.
+
 ## 0.1.3
 
 Prepare public verses directly in the normal /say input. Enter submits each verse. Removed the direct addon chat-send attempt that preceded the blocked-action notice.

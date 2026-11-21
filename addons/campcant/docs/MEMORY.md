@@ -11,3 +11,5 @@ A player encountered a suppressed error in 0.1.0. The original trace was unavail
 Lua mock checks for 0.1.2 passed for immediate successive clicks, final verse retention, manual rehearsal, Stop, legacy verse data, blocked-action retry and preserving an open chat entry.
 
 In-game evidence from 0.1.2 shows CampCant receiving ADDON_ACTION_BLOCKED with UNKNOWN() and one verse appearing in SAY. The client did not identify the protected function. Version 0.1.3 uses ChatFrameUtil.OpenChat directly for public verses. Submission stays with Blizzard's edit box. Local mock tests cover manual rehearsal, public chat preparation, preserving a pending input, final verse and Stop. Live verification of 0.1.3 is pending.
+
+0.1.4 uses Blizzard's [SecureActionButtonTemplate](https://github.com/Gethe/wow-ui-source/blob/734f065329cff4992835b01a84f210a297db91b6/Interface/AddOns/Blizzard_FrameXML/SecureTemplates.lua), configured with a literal single-line /say macro before the click. The inherited OnClick owns execution. PostClick advances the cursor. The secure visibility driver hides the performance controls during combat. Live one-click delivery awaits verification.

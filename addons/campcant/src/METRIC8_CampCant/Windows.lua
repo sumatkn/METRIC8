@@ -39,6 +39,18 @@ local function button(parent, x, y, width, caption, fn)
     return b
 end
 
+local function verseButton(parent, x, width, caption, after)
+    local b = CreateFrame("Button", nil, parent, "UIPanelButtonTemplate,SecureActionButtonTemplate")
+    b:SetSize(width, 24)
+    b:SetPoint("TOPLEFT", x, -68)
+    b:SetText(caption)
+    b:RegisterForClicks("LeftButtonUp")
+    b:SetAttribute("useOnKeyDown", false)
+    b:SetScript("PreClick", C.beforeClick)
+    b:SetScript("PostClick", after)
+    return b
+end
+
 local function field(parent, x, y, width, height, multi)
     local e = CreateFrame("EditBox", nil, parent, "BackdropTemplate")
     e:SetSize(width, height)
@@ -130,6 +142,7 @@ local function save()
 end
 
 local function play(public)
+    if InCombatLockdown() then print("CampCant: open the player after combat."); return end
     book:Hide()
     C.stop()
     C.player:Show()
@@ -184,6 +197,10 @@ local function build()
     button(editor, 125, 242, 134, "Discard edits", finishEdit)
 
     local p = panel("METRIC8_CampCantPlayer", 316, 104, -150)
+    local visibility = CreateFrame("Frame", nil, UIParent, "SecureHandlerStateTemplate")
+    visibility:SetAllPoints(UIParent)
+    RegisterStateDriver(visibility, "visibility", "[combat] hide; show")
+    p:SetParent(visibility)
     p:ClearAllPoints()
     p:SetPoint("TOP", UIParent, "CENTER", 0, -98)
     C.player = p
@@ -206,15 +223,18 @@ local function build()
     label(p, 42, 42, 252):SetText("Use racial cadence / accent")
     p.voice:SetHitRectInsets(0, -200, 0, 0)
     p.voice:SetScript("OnClick", function(self) C.setVoice(self:GetChecked() and true or false) end)
-    p.start = button(p, 12, 68, 84, "Start", function()
-        C.start(songAt(selected), true)
+    p.start = verseButton(p, 12, 84, "Start", function()
+        if C.afterClick() then C.start(songAt(selected), true) end
     end)
-    p.sing = button(p, 101, 68, 110, "Next Verse", C.sing)
+    p.sing = verseButton(p, 101, 110, "Next Verse", C.nextVerse)
     p.stop = button(p, 216, 68, 88, "Stop", C.stop)
     p.line = label(p, 14, 102, 288)
     p.status = label(p, 14, 183, 288, "GameFontNormalSmall")
     p:RegisterEvent("PLAYER_LEAVING_WORLD")
-    p:SetScript("OnEvent", function() C.stop(); p:Hide() end)
+    p:SetScript("OnEvent", function()
+        C.stop()
+        if not InCombatLockdown() then p:Hide() end
+    end)
     C.showIdle()
 end
 
@@ -225,16 +245,17 @@ function C.showIdle()
     p.voice:SetChecked(C.db.voice == true)
     p.line:SetText("")
     p.status:SetText("")
-    p.start:Enable()
-    p.sing:Disable()
+    C.arm(p.start, songAt(selected), 1, true)
+    C.arm(p.sing, nil, 1, false)
     p.stop:Disable()
 end
 
 SLASH_METRIC8CAMPCANT1 = "/campcant"
 SlashCmdList.METRIC8CAMPCANT = function(arg)
     if C.clean(arg or ""):lower() == "stop" then C.stop(); return end
+    if InCombatLockdown() then print("CampCant: open the player after combat."); return end
     if not book then build() end
     if editor:IsShown() then return end
     if book:IsShown() then play(true); return end
-    if C.player:IsShown() then C.stop(); C.player:Hide() else C.player:Show() end
+    if C.player:IsShown() then C.stop(); C.player:Hide() else C.showIdle(); C.player:Show() end
 end
