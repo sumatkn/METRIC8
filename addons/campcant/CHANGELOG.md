@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.6
+
+Replaced the excerpt catalog with all ten supplied song files, preserving all 156 lyric lines and repeated refrains.
+
 ## 0.1.5
 
 Replace the four starter songs with the 16-entry research catalog. Reference-only entries can be copied into the editor.

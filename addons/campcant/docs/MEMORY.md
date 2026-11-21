@@ -15,3 +15,5 @@ In-game evidence from 0.1.2 shows CampCant receiving ADDON_ACTION_BLOCKED with U
 0.1.4 uses Blizzard's [SecureActionButtonTemplate](https://github.com/Gethe/wow-ui-source/blob/734f065329cff4992835b01a84f210a297db91b6/Interface/AddOns/Blizzard_FrameXML/SecureTemplates.lua), configured with a literal single-line /say macro before the click. The inherited OnClick owns execution. PostClick advances the cursor. The secure visibility driver hides the performance controls during combat. Live one-click delivery awaits verification.
 
 0.1.5 follows the 16-entry research catalog. The Traveler's Path is listed as a reference because the [song's documentation](https://warcraft.wiki.gg/wiki/The_Traveler%27s_Path) identifies no official lyrics. The remaining entries contain excerpts. Player songs use the existing account-wide saved-variable list.
+
+0.1.6 replaces the 16-entry excerpt catalog with ten supplied songs. The title is taken from line one. Line two is source metadata. Each subsequent nonblank line is a separate verse.

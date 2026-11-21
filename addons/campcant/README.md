@@ -6,4 +6,4 @@ Click the song title to open the songbook. The second row switches racial cadenc
 
 In the songbook, browse songs and verses with the arrows. Choose **Select song** to return to the player or **Rehearse privately** to step through the verses without sending chat. **New song** starts a draft. Enter a title and the first verse, then use **Add verse** to insert another. **Save song** stores it account-wide. **Edit a copy** lets you adapt a built-in. Each verse fits in one chat message (255 UTF-8 bytes).
 
-The 16 built-ins follow the CampCant research songbook in order. Fifteen contain short lyric excerpts. The Traveler's Path is a reference entry with an editable copy because a verified transcription was unavailable. Use **Edit a copy** to build a longer performance. Custom songs are stored separately from the built-ins.
+The ten bundled songs contain 156 verses. Each nonblank lyric line from the supplied song files is one click, in file order. Titles and source headers are never sung. Custom songs are stored separately.
