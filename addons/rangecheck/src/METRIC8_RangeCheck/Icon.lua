@@ -26,11 +26,18 @@ sightBadge:SetPoint("CENTER", sightPanel)
 sightBadge:SetText("LOS!")
 sightBadge:SetTextColor(1, 1, 1)
 
-function addon.ShowSightWarning(visible)
-    sightPanel:SetShown(visible)
-    sightBadge:SetShown(visible)
+function addon.ShowSightWarning(blocked, relevant)
+    sightPanel:SetShown(relevant)
+    sightBadge:SetShown(relevant)
+    if blocked then
+        sightPanel:SetColorTexture(0.52, 0.06, 0.04, 1)
+        sightBadge:SetText("LOS!")
+    else
+        sightPanel:SetColorTexture(0.12, 0.12, 0.12, 0.95)
+        sightBadge:SetText("LOS?")
+    end
 end
-addon.ShowSightWarning(false)
+addon.ShowSightWarning(false, false)
 
 local distanceLabel = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
 distanceLabel:SetPoint("TOP", frame, "BOTTOM", 0, -3)

@@ -18,6 +18,12 @@ local presets = {
     DRUID = { { 5176, spell } },                          -- Wrath
 }
 
+-- Nominal hostile item ranges from the Forever table in LibRangeCheck.
+local itemProbes = {
+    { 5, 8149, 22432 }, { 10, 17626, 10699 }, { 20, 10645, 1191 },
+    { 30, 835, 7734 }, { 35, 18904 }, { 40, 4945, 8348 }, { 45, 221316 },
+}
+
 local function readable(value, expected)
     if issecretvalue and issecretvalue(value) then return nil end
     if type(value) == expected then return value end
@@ -27,6 +33,48 @@ local function read(expected, func, ...)
     if type(func) ~= "function" then return nil end
     local ok, value, extra = pcall(func, ...)
     if ok then return readable(value, expected), extra end
+end
+
+function addon.PrepareRangeItems()
+    local item = C_Item
+    if not item or type(item.RequestLoadItemDataByID) ~= "function" then return end
+    for _, probe in ipairs(itemProbes) do
+        for index = 2, #probe do
+            local id = probe[index]
+            if read("boolean", item.DoesItemExistByID, id) == true
+                and read("boolean", item.IsItemDataCachedByID, id) ~= true then
+                pcall(item.RequestLoadItemDataByID, id)
+            end
+        end
+    end
+end
+
+local function itemBounds(details)
+    local item = C_Item or {}
+    local lower, upper
+    for _, probe in ipairs(itemProbes) do
+        local yards = probe[1]
+        local result
+        for index = 2, #probe do
+            local id = probe[index]
+            if read("boolean", item.IsItemDataCachedByID, id) == true then
+                local answer = read("boolean", item.IsItemInRange, id, "target")
+                if answer ~= nil and result ~= nil and answer ~= result then
+                    if details then details[#details + 1] = yards .. " yd probes disagreed" end
+                    return nil, nil
+                end
+                if answer ~= nil then result = answer end
+            end
+        end
+        if details then details[#details + 1] = yards .. " yd=" .. tostring(result) end
+        if result == true then
+            upper = upper or yards
+        elseif result == false then
+            lower = yards
+        end
+    end
+    if lower and upper and lower >= upper then return nil, nil end
+    return lower, upper
 end
 
 function addon.GetPlayerClass()
@@ -74,27 +122,58 @@ local function probeSpell(seed)
     local id = entry and readable(entry.spellID, "number")
     if not id then return nil end
     local result = read("boolean", spells.IsSpellInRange, id, "target")
-    if result ~= false then return result, id end
+    if result ~= false then return result, id, result end
     local info = read("table", spells.GetSpellInfo, id)
-    -- A negative result with a minimum range does not tell us which boundary failed.
-    if info and readable(info.minRange, "number") == 0 then return false end
+    -- Preserve the raw negative separately for two-sided range checks.
+    if info and readable(info.minRange, "number") == 0 then return false, id, false end
+    return nil, id, false
 end
 
-function addon.GetDistanceText(status, spellID)
+local function spellLimits(id)
+    local info = id and read("table", C_Spell and C_Spell.GetSpellInfo, id)
+    local min = info and readable(info.minRange, "number")
+    local max = info and readable(info.maxRange, "number")
+    if min and max and min >= 0 and max > min and max < math.huge then return min, max end
+end
+
+local function estimateHunter(meleeResult, shotResult, shotID, lower, upper)
+    local minimum, maximum = spellLimits(shotID)
+    if maximum and lower and lower >= maximum then return "estimatedout" end
+    if upper and upper <= 5 and meleeResult == nil then return "estimatedmelee" end
+    if minimum and minimum > 0 and lower and lower >= 5 and upper then
+        if upper < minimum or (shotResult == false and upper <= math.min(10, maximum)) then
+            return "estimateddeadzone"
+        end
+    end
+    if upper and upper <= 10 then return "near" end
+    return "unknown"
+end
+
+function addon.GetDistanceText(status, spellID, lower, upper)
     if status == "none" then return "" end
     local squared, checked = read("number", UnitDistanceSquared, "target")
     if readable(checked, "boolean") == true and squared and squared >= 0 and squared < math.huge then
         return ("%.1f m"):format(math.sqrt(squared) * 0.9144)
     end
 
-    -- A positive spell check can support an approximate band, not a position.
-    local info = spellID and read("table", C_Spell and C_Spell.GetSpellInfo, spellID)
-    local min = info and readable(info.minRange, "number")
-    local max = info and readable(info.maxRange, "number")
-    if not (min and max and min >= 0 and max > min and max < math.huge) then return "— m" end
-    local upper = math.ceil(max * 0.9144)
-    if min == 0 then return ("~≤%d m"):format(upper) end
-    return ("~%d–%d m"):format(math.floor(min * 0.9144), upper)
+    -- A confirmed spell can narrow compatible item evidence.
+    local min, max = spellLimits(spellID)
+    if max then
+        local combinedLower = math.max(lower or 0, min)
+        local combinedUpper = math.min(upper or max, max)
+        if combinedLower < combinedUpper then
+            lower, upper = combinedLower, combinedUpper
+        else
+            lower, upper = min, max
+        end
+    end
+    if upper then
+        local upperMeters = math.ceil(upper * 0.9144)
+        if not lower or lower == 0 then return ("~≤%d m"):format(upperMeters) end
+        return ("~%d–%d m"):format(math.floor(lower * 0.9144), upperMeters)
+    end
+    if lower then return ("~>%d m"):format(math.floor(lower * 0.9144)) end
+    return "— m"
 end
 
 local function rangedEquipment()
@@ -131,6 +210,8 @@ function addon.GetRangeStatus(class, details)
     if not preset then return "unknown" end
     local checked, uncertain = false, false
     local positive, positiveSpell
+    local hunter = class == "HUNTER"
+    local meleeResult, shotResult, shotID
     for _, probe in ipairs(preset) do
         local kind = probe[2]
         local equipment
@@ -145,15 +226,21 @@ function addon.GetRangeStatus(class, details)
                     details[#details + 1] = "melee query=" .. tostring(result) .. ", swing event=" .. eventState
                 end
                 if result == nil then result = swingEventRange end
+                meleeResult = result
             else
-                result, id = probeSpell(seed)
+                local raw
+                result, id, raw = probeSpell(seed)
+                if hunter and kind == ranged then
+                    shotResult, shotID = raw, id
+                    if details then details[#details + 1] = "Auto Shot raw=" .. tostring(raw) end
+                end
             end
             if details then
                 local source = seed == mainHand and "native auto-attack" or ("spellbook " .. seed)
                 details[#details + 1] = kind .. " (" .. source .. ")=" .. tostring(result)
             end
             if result == true then
-                if not details then return kind, id end
+                if not details and not hunter then return kind, id end
                 if not positive then positive, positiveSpell = kind, id end
             elseif result == false then
                 checked = true
@@ -166,6 +253,15 @@ function addon.GetRangeStatus(class, details)
             end
             if not equipment then uncertain = true end
         end
+    end
+    if hunter then
+        local lower, upper = itemBounds(details)
+        if meleeResult == true and shotResult == true then return "both", shotID, lower, upper end
+        if positive then return positive, positiveSpell, lower, upper end
+        local estimate = estimateHunter(meleeResult, shotResult, shotID, lower, upper)
+        if estimate ~= "unknown" then return estimate, nil, lower, upper end
+        if checked and not uncertain then return "out", nil, lower, upper end
+        return "unknown", nil, lower, upper
     end
     if positive then return positive, positiveSpell end
     if checked and not uncertain then return "out" end

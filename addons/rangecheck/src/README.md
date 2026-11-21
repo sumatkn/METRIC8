@@ -23,4 +23,4 @@ METRIC8_RangeCheck.RegisterTheme("example", {
 
 IDs are lowercase and can contain letters, digits, underscores and hyphens. Registration returns false for invalid or duplicate IDs. Visual fields accept texture file IDs or paths. In overlay mode the optional `overlay` texture appears above the base icon. Replacement mode uses each status's `icon` when supplied. Both display the status label. The Default theme supplies omitted style fields.
 
-Supported keys are `none`, `invalid`, `unknown`, `melee`, `ranged`, `spell`, `wand`, `out` and `deadzone`. The last key is reserved for a future supported detection rule. Select the registered theme with `/rangecheck theme example`.
+Supported keys are `none`, `invalid`, `unknown`, `melee`, `ranged`, `spell`, `wand`, `out` `both`, `estimatedmelee`, `estimateddeadzone`, `estimatedout`, `near`, and `deadzone`. The `deadzone` key is reserved for confirmed detection. Select the registered theme with `/rangecheck theme example`.

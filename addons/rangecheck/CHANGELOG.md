@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added Hunter proximity estimates independent of learned melee abilities, estimated dead-zone and out-of-range labels, and a tighter distance band when item probes return usable results.
+- Added a persistent `LOS?` state for attackable targets and a combined `M/R` status when both Hunter attacks report in range.
+
 - Added a passive listener for Blizzard's main-hand range event and debug output distinguishing event delivery from direct query results.
 
 - Replaced the Hunter melee ability probe with Forever’s native main-hand auto-attack range query.

@@ -8,9 +8,14 @@ local function message(line)
     print("RangeCheck: " .. line)
 end
 
+local function updateSight()
+    local blocked = sightWarning > 0
+    addon.ShowSightWarning(blocked, blocked or (lastStatus ~= nil and lastStatus ~= "none" and lastStatus ~= "invalid"))
+end
+
 local function clearSightWarning()
     sightWarning = 0
-    addon.ShowSightWarning(false)
+    updateSight()
 end
 
 local function noteError(errorText)
@@ -19,14 +24,14 @@ local function noteError(errorText)
     if errorText == SPELL_FAILED_LINE_OF_SIGHT or errorText == ERR_LINE_OF_SIGHT then
         if debugging and sightWarning <= 0 then message("debug | WoW reported a line-of-sight error") end
         sightWarning = 3
-        addon.ShowSightWarning(true)
+        updateSight()
     end
 end
 
 local function update()
     local details = debugging and {} or nil
-    local status, spellID = addon.GetRangeStatus(class, details)
-    local distance = addon.GetDistanceText(status, spellID)
+    local status, spellID, lower, upper = addon.GetRangeStatus(class, details)
+    local distance = addon.GetDistanceText(status, spellID, lower, upper)
     if distance ~= lastDistance then
         lastDistance = distance
         addon.ShowDistance(distance)
@@ -42,6 +47,7 @@ local function update()
     end
     if status ~= lastStatus then
         lastStatus = status
+        updateSight()
         addon.RenderIcon(addon.GetTheme(profile.theme), profile.mode, status)
     end
 end
@@ -130,6 +136,7 @@ events:SetScript("OnEvent", function(self, event, first, second, third)
         self:UnregisterEvent(event)
         self:RegisterEvent("PLAYER_TARGET_CHANGED")
         if class == "HUNTER" then
+            addon.PrepareRangeItems()
             self:RegisterEvent("PLAYER_SWING_RANGE_UPDATE")
             self:RegisterEvent("PLAYER_ENTERING_WORLD")
         end

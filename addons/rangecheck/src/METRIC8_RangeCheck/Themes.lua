@@ -1,6 +1,6 @@
 local _, addon = ...
 
-local states = { "none", "invalid", "unknown", "melee", "ranged", "spell", "wand", "out", "deadzone" }
+local states = { "none", "invalid", "unknown", "melee", "ranged", "spell", "wand", "out", "deadzone", "both", "estimatedmelee", "estimateddeadzone", "estimatedout", "near" }
 local default = {
     icon = 134400, -- Blizzard's question-mark icon.
     mode = "overlay",
@@ -14,6 +14,11 @@ local default = {
         wand =     { label = "W",  color = { 0.75, 0.64, 1.00 }, icon = 135139 },
         out =      { label = "OUT", color = { 1.00, 0.38, 0.34 }, icon = 132090 },
         deadzone = { label = "DZ", color = { 1.00, 0.62, 0.24 } },
+        both = { label = "M/R", color = { 0.30, 0.95, 0.45 } },
+        estimatedmelee = { label = "~M", color = { 0.65, 0.90, 0.40 } },
+        estimateddeadzone = { label = "~DZ", color = { 1.00, 0.62, 0.24 } },
+        estimatedout = { label = "~OUT", color = { 1.00, 0.50, 0.35 } },
+        near = { label = "NEAR", color = { 0.95, 0.79, 0.34 } },
     },
 }
 local themes = { default = default }

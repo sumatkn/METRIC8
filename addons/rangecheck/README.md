@@ -8,7 +8,12 @@ One movable, scalable icon shows the current target's range for selected attacks
 
 | Label | Meaning |
 | --- | --- |
-| `M`, `R`, `S`, `W` | A preset melee attack, ranged weapon attack, offensive spell, or wand attack is in range. When both checks succeed, Hunter shows melee and wand-capable casters show spell. |
+| `M`, `R`, `S`, `W` | A melee attack, ranged weapon attack, offensive spell, or wand attack is in range according to the corresponding client check. |
+| `M/R` | Both Hunter melee and Auto Shot report in range. |
+| `~M` | Estimated melee proximity from a close item-range check. |
+| `~DZ` | Estimated Hunter dead zone from close-range evidence and Auto Shot’s limits or a negative Auto Shot reading. |
+| `~OUT` | Estimated beyond Auto Shot’s reported maximum. |
+| `NEAR` | A short-range check succeeded, but melee and the dead zone are still ambiguous. |
 | `OUT` | All applicable preset probes returned an interpretable negative. |
 | `?` | Evidence was unavailable or ambiguous. This includes Hunter Auto Shot failures where the client cannot distinguish too close from too far. |
 | `NONE` | No target selected. |
@@ -16,9 +21,9 @@ One movable, scalable icon shows the current target's range for selected attacks
 
 Hunters use the client’s main-hand auto-attack range query for melee and Auto Shot for ranged weapon range. The melee check requires no learned ability or action-bar slot. When Blizzard's Auto-Attack Timer is enabled, RangeCheck also listens for its main-hand range events and uses readable results when the direct query is unavailable. If the client withholds melee range, or Auto Shot cannot distinguish too close from too far, a result may remain Unknown.
 
-Range is based on the client’s spell checks. A white `LOS!` label on a dark red background in the upper-right corner shows a recent line-of-sight error from WoW independently of the range label. The badge clears after three seconds or a target change. The UI error does not identify the affected unit, and an empty corner means no recent error was observed. RangeCheck does not start attacks or check facing.
+Range is based on the client’s spell checks. A white `LOS!` label on a dark red background in the upper-right corner shows a recent line-of-sight error from WoW independently of the range label. The warning expires after three seconds or a target change. `LOS?` means line of sight is unknown. The UI error does not identify the affected unit. RangeCheck does not start attacks or check facing.
 
-The text beneath the icon shows measured distance in meters when available. `~` marks a band estimated from a successful spell range check and `— m` means the client did not provide usable distance evidence.
+The text beneath the icon shows measured distance in meters when available. `~` marks a band estimated from supported item and spell range checks and `— m` means the client did not provide usable distance evidence.
 
 ## Commands
 
