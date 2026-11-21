@@ -17,14 +17,28 @@ strip:SetColorTexture(0, 0, 0, 0.85)
 local label = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall", 2)
 label:SetPoint("CENTER", strip)
 
+local sightPanel = frame:CreateTexture(nil, "OVERLAY", nil, 1)
+sightPanel:SetPoint("TOPRIGHT")
+sightPanel:SetSize(33, 15)
+sightPanel:SetColorTexture(0.52, 0.06, 0.04, 1)
 local sightBadge = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall", 2)
-sightBadge:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -2, -2)
+sightBadge:SetPoint("CENTER", sightPanel)
 sightBadge:SetText("LOS!")
-sightBadge:SetTextColor(1, 0.4, 0.30)
-sightBadge:Hide()
+sightBadge:SetTextColor(1, 1, 1)
 
 function addon.ShowSightWarning(visible)
+    sightPanel:SetShown(visible)
     sightBadge:SetShown(visible)
+end
+addon.ShowSightWarning(false)
+
+local distanceLabel = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+distanceLabel:SetPoint("TOP", frame, "BOTTOM", 0, -3)
+distanceLabel:SetShadowColor(0, 0, 0, 1)
+distanceLabel:SetShadowOffset(1, -1)
+
+function addon.ShowDistance(text)
+    distanceLabel:SetText(text)
 end
 
 local dragProfile

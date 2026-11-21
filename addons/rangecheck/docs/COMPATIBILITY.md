@@ -21,6 +21,10 @@ RangeCheck listens to `UI_ERROR_MESSAGE` and recognizes the client's localized l
 
 In 0.1.3-dev, `/rangecheck debug on` prints one initial snapshot and prints again when the target or normalized probe results change. It reports the melee and ranged probes even if one has already confirmed range. Initial and changed line-of-sight errors are reported separately while repeats inside the badge window are suppressed. No further API changes were needed.
 
+## Action-bar range and distance (0.1.4-dev)
+
+The maintainer’s 0.1.3-dev debug log repeatedly showed Wing Clip as unavailable on living attackable targets, while Auto Shot returned true at range. The log also observed line-of-sight errors while the icon reported ranged. The client exposes `C_ActionBar.FindSpellActionButtons`, `HasRangeRequirements` and `IsActionInRange`. RangeCheck uses these read-only APIs for Wing Clip if slotted. This reads the same kind of range signal used by the action button, without inspecting color or activating the spell. `UnitDistanceSquared` is used only when checkedDistance is true and the number is readable. Where distance is unavailable, a positive spell result with nonzero, readable range metadata supports an approximate band. Melee reach and hitboxes can prevent a numeric estimate. The live line-of-sight query remains unavailable in the reviewed API. The action error badge is higher contrast and remains visible for three seconds. [Action-bar API](https://github.com/Gethe/wow-ui-source/blob/forever/Interface/AddOns/Blizzard_APIDocumentationGenerated/ActionBarFrameDocumentation.lua) · [Unit API](https://github.com/Gethe/wow-ui-source/blob/forever/Interface/AddOns/Blizzard_APIDocumentationGenerated/UnitDocumentation.lua)
+
 ## In-game smoke test pending
 
 1. Confirm `/dump GetBuildInfo()` and `/dump select(4, GetBuildInfo())`, then install from source and check login for Lua errors.

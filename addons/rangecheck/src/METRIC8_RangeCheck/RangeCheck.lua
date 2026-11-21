@@ -1,6 +1,6 @@
 local addonName, addon = ...
 local events = CreateFrame("Frame")
-local class, profile, lastStatus
+local class, profile, lastStatus, lastDistance
 local sightWarning = 0
 local debugging, lastDebugOutput = false, nil
 
@@ -18,14 +18,19 @@ local function noteError(errorText)
     if type(errorText) ~= "string" or errorText == "" then return end
     if errorText == SPELL_FAILED_LINE_OF_SIGHT or errorText == ERR_LINE_OF_SIGHT then
         if debugging and sightWarning <= 0 then message("debug | WoW reported a line-of-sight error") end
-        sightWarning = 2
+        sightWarning = 3
         addon.ShowSightWarning(true)
     end
 end
 
 local function update()
     local details = debugging and {} or nil
-    local status = addon.GetRangeStatus(class, details)
+    local status, spellID = addon.GetRangeStatus(class, details)
+    local distance = addon.GetDistanceText(status, spellID)
+    if distance ~= lastDistance then
+        lastDistance = distance
+        addon.ShowDistance(distance)
+    end
     if details then
         local output = table.concat(details, " | ")
         if output ~= "" then output = " | " .. output end

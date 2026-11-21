@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added the native Wing Clip action-bar range check for Hunters.
+- Added a distance readout in meters with estimated bands or unavailable state, and improved LOS badge contrast and visibility.
+
 - Added opt-in `/rangecheck debug on` to log changes in target eligibility and range responses, plus recent line-of-sight errors, without repeating unchanged results.
 
 - Added a separate corner badge for recent client-reported line-of-sight errors and `/rangecheck status` for Hunter range diagnostics.
