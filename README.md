@@ -4,7 +4,7 @@
 
 METRIC8 is the umbrella suite and development home for WoW: Forever addons and supporting tools. This repository keeps suite governance and shared planning alongside a dedicated section for every included project.
 
-**Addons:** [METRIC8: NoTHX](addons/nothx/README.md) 0.1.0, [METRIC8: CampCant](addons/campcant/README.md) 0.1.6, and [METRIC8: RangeCheck](addons/rangecheck/README.md) 0.1.0-dev.
+**Addons:** [METRIC8: NoTHX](addons/nothx/README.md) 0.1.0, [METRIC8: CampCant](addons/campcant/README.md) 0.1.6, and [METRIC8: RangeCheck](addons/rangecheck/README.md) 0.1.1-dev.
 
 ## Start here
 

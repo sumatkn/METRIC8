@@ -5,8 +5,8 @@ local default = {
     icon = 134400, -- Blizzard's question-mark icon.
     mode = "overlay",
     styles = {
-        none =     { label = "-",  color = { 0.55, 0.55, 0.55 } },
-        invalid =  { label = "X",  color = { 0.65, 0.65, 0.65 } },
+        none =     { label = "NONE",  color = { 0.55, 0.55, 0.55 } },
+        invalid =  { label = "N/A",  color = { 0.65, 0.65, 0.65 } },
         unknown =  { label = "?",  color = { 0.95, 0.79, 0.34 } },
         melee =    { label = "M",  color = { 0.30, 0.95, 0.45 }, icon = 132223 },
         ranged =   { label = "R",  color = { 0.30, 0.90, 0.70 }, icon = 132222 },

@@ -11,7 +11,10 @@ One movable, scalable icon shows the current target's range for selected attacks
 | `M`, `R`, `S`, `W` | A preset melee attack, ranged weapon attack, offensive spell, or wand attack is in range. When both checks succeed, Hunter shows melee and wand-capable casters show spell. |
 | `OUT` | All applicable preset probes returned an interpretable negative. |
 | `?` | Evidence was unavailable or ambiguous. This includes Hunter Auto Shot failures where the client cannot distinguish too close from too far. |
-| `-`, `X` | No target, or a target that is dead or cannot be attacked. |
+| `NONE` | No target selected. |
+| `N/A` | The selected target is dead or cannot be attacked. |
+
+Hunters use learned Wing Clip for melee and Auto Shot for ranged weapon range. If Wing Clip is unavailable, or Auto Shot cannot distinguish too close from too far, a result may remain Unknown.
 
 Range is based on the client’s spell checks. The icon conveys no information about facing, cooldowns, line of sight, or whether you can cast right now.
 

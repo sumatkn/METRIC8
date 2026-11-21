@@ -11,6 +11,10 @@ Reviewed November 21, 2026 under [P-004](../../../docs/PROCEDURES.md#p-004-forev
 
 A local Lua 5.2 mock loaded all files in TOC order and exercised startup, periodic updates, no target, invalid targets, spell ranks, melee/ranged/spell/wand priority, equipment changes, nil/secret/error cases, ambiguous Hunter negatives, theme registration and precedence, scaling, drag position, and profile inheritance. The mock does not establish runtime behavior in WoW. The third-party simulator could not initialize and provided no validation.
 
+## Hunter follow-up (0.1.1-dev)
+
+The maintainer saw a ranged indication on a Hunter and reported difficulty distinguishing melee and the dead zone. A Forever addon author reported that Raptor Strike can answer in range well outside melee reach, while Wing Clip changes its answer at melee reach. This revision uses Wing Clip once learned and retains the existing Auto Shot check. It also makes no target, a nonattackable target and an unavailable range visibly distinct. No new client APIs were added. This revision was reviewed against source and reported behavior. Gameplay verification is pending with the maintainer. [Forever range probe observations](https://github.com/Nedyar/NameplateDistance/blob/main/Range.lua#L103)
+
 ## In-game smoke test pending
 
 1. Confirm `/dump GetBuildInfo()` and `/dump select(4, GetBuildInfo())`, then install from source and check login for Lua errors.

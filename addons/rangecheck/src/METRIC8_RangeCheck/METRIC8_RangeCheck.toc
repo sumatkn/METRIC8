@@ -2,7 +2,7 @@
 ## AllowLoadGameType: camelot
 ## Title: METRIC8: RangeCheck
 ## Notes: Shows the range status of selected class attacks.
-## Version: 0.1.0-dev
+## Version: 0.1.1-dev
 ## SavedVariables: METRIC8_RangeCheckDB
 ## SavedVariablesPerCharacter: METRIC8_RangeCheckCharacterDB
 
