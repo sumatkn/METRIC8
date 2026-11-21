@@ -1,5 +1,7 @@
 # Compatibility and test notes
 
+On November 21, 2026, the maintainer confirmed that CampCant 0.1.6 works in game. This was a general confirmation of the build.
+
 Reviewed November 21, 2026 against the Forever 1.60.1 build 71037 UI export (interface 16001), still the November 20 baseline. The [generated chat API](https://github.com/Gethe/wow-ui-source/blob/734f065329cff4992835b01a84f210a297db91b6/Interface/AddOns/Blizzard_APIDocumentationGenerated/ChatInfoDocumentation.lua) exposes restricted C_ChatInfo.SendChatMessage with no delivery result. Forever [API notes](https://warcraft.wiki.gg/wiki/Patch_1.60.1/API_changes/notes) document the hardware-event requirement for outdoor SAY. Checked the [November 20 hotfix listing](https://worldofwarcraft.blizzard.com/en-us/news/24315281/wow-forever-hotfixes-november-20-2026). Public sends occur only from direct clicks. The client can decline delivery. Realm identity is unused.
 
 Lua mock checks passed for creating and saving two verses, discarding edits, validating durations and UTF-8 byte limits, race voice, rehearsal advancement and completion, public send gating, lockdown retry, double clicks, and stopping. Live-client layout, saved variables across reloads, and outdoor /say delivery await in-game verification.
