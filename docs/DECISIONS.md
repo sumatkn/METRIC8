@@ -8,6 +8,7 @@
 | D-004 | 2026-11-16 | Organize sections under addons/, tools/, docs/, and templates/ | Setup organizational choice; reversible |
 | D-005 | 2026-11-16 | Preserve the existing MIT license | Existing repository state retained |
 | D-006 | 2026-11-20 | Apply the Forever compatibility review before addon work (P-004) | Confirmed by maintainer |
+| D-CampCant | 2026-11-21 | Include METRIC8: CampCant in the suite | Confirmed by maintainer request |
 
 Project-specific requirements belong in each project's documentation. Initial Range Indicator requirements are captured [here](../addons/range-indicator/docs/REQUIREMENTS.md); their capture does not settle suite membership or naming.
 

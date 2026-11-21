@@ -18,7 +18,7 @@ The public repository contained README.md and an MIT LICENSE only. There was no 
 - A reusable project template defines source, docs, assets, and distribution sections.
 - Range Indicator has a requirements-only section based on the supplied discussion context.
 - Database tooling is listed as a candidate; its previous files and architecture have not been imported.
-- No implementation, release, branch protection, or automation has been configured.
+- [METRIC8: CampCant](../../addons/campcant/README.md) is implemented. Its Lua mock checks passed and in-game testing is pending.
 
 ## Confirmed constraints
 
@@ -40,7 +40,7 @@ Resolve the initial roster and distribution policy, then import the selected pro
 
 ## Validation and limits
 
-Foundation validation covers relative documentation links and preservation of the existing license. There is no executable code to test and no in-game compatibility claim.
+Foundation validation covers relative documentation links and preservation of the existing license. See each implemented project's compatibility and verification notes.
 
 ## Handoff maintenance
 
