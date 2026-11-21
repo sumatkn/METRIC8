@@ -54,9 +54,10 @@ function C.sing()
         C.player.status:SetText("Chat restricted. Try again later.")
         return
     end
-    local ok = pcall(C_ChatInfo.SendChatMessage, run.line, "SAY")
+    local ok, message = pcall(C_ChatInfo.SendChatMessage, run.line, "SAY")
     if not ok then
-        C.player.status:SetText("Chat unavailable. Click to retry.")
+        print("CampCant /say: " .. tostring(message))
+        C.player.status:SetText("Chat error. See chat for details.")
         return
     end
     run.readyAt = GetTime() + run.duration
@@ -80,3 +81,13 @@ function C.tick()
     run.lastLeft = nil
     showVerse(run)
 end
+
+-- The client may report a protected action as an event instead of a Lua error.
+local restrictions = CreateFrame("Frame")
+restrictions:RegisterEvent("ADDON_ACTION_BLOCKED")
+restrictions:RegisterEvent("ADDON_ACTION_FORBIDDEN")
+restrictions:SetScript("OnEvent", function(_, event, addon, action)
+    if addon == "METRIC8_CampCant" then
+        print("CampCant: " .. event .. " (" .. tostring(action) .. ")")
+    end
+end)

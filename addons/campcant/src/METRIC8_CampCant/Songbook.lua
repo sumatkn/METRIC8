@@ -1,16 +1,10 @@
 local name, C = ...
 C.builtins = {
-    { title = "Dark Iron Keg Raid", credit = "Brewfest herald arrangement", verses = {
+    { title = "Dark Iron Brewfest Song (excerpt)", credit = "Dark Iron Herald at Brewfest", verses = {
         {"We've come ta drink yer brew!", 4},
-        {"Boots on the boards and soot on the tap! Who rolled a keg onto me lap?", 6},
-        {"Coren sent six of us up through the floor. Five brought a tankard. One brought a door.", 7},
-        {"A door? Aye, lads, for the bill on the nail! Shut it behind us and roll home the ale!", 7},
     }},
-    { title = "Two Dwarves at the Campfire", credit = "Answer song to the retired troll /silly", verses = {
-        {"I kill two dwarves in the morning...", 4},
-        {"That's where the old troll stopped for breath. Two beards leaned in and stared him down.", 6},
-        {"One laid a copper beside the fire. One said, 'Bet he forgets the rest.'", 6},
-        {"He took that copper and tuned his drum. 'For one more coin, you sing it, friends.'", 7},
+    { title = "I Kill Two Dwarves (excerpt)", credit = "Retired male troll /silly", verses = {
+        {"I kill two dwarves in the morning", 4},
     }},
     { title = "The Last Zepp out of Brill", credit = "Original Undercity travel song", verses = {
         {"The tower bell rang in the Tirisfal rain. I ran with a boot half tied.", 6},
