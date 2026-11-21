@@ -1,0 +1,9 @@
+## Interface: 16001
+## Title: METRIC8: NoTHX
+## Notes: Silences the unspent talent points reminder.
+## SavedVariables: METRIC8_NoTHXDB
+## Version: 0.1.0
+## Dependencies: Blizzard_MicroMenu
+
+NoTHX.lua
+Options.lua
