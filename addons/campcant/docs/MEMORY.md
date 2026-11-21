@@ -9,3 +9,5 @@ A player encountered a suppressed error in 0.1.0. The original trace was unavail
 0.1.2 uses manual advancement in both modes. Saved verses from earlier versions are read by their text field. A caught chat failure or synchronous blocked-action event leaves the cursor on the same verse for chat-box fallback. A generic failed-action notice alone does not identify which addon caused it.
 
 Lua mock checks for 0.1.2 passed for immediate successive clicks, final verse retention, manual rehearsal, Stop, legacy verse data, blocked-action retry and preserving an open chat entry.
+
+In-game evidence from 0.1.2 shows CampCant receiving ADDON_ACTION_BLOCKED with UNKNOWN() and one verse appearing in SAY. The client did not identify the protected function. Version 0.1.3 uses ChatFrameUtil.OpenChat directly for public verses. Submission stays with Blizzard's edit box. Local mock tests cover manual rehearsal, public chat preparation, preserving a pending input, final verse and Stop. Live verification of 0.1.3 is pending.
