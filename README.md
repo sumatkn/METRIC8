@@ -4,7 +4,7 @@
 
 METRIC8 is the umbrella suite and development home for WoW: Forever addons and supporting tools. This repository keeps suite governance and shared planning alongside a dedicated section for every included project.
 
-**Status:** repository foundation and requirements. No playable addon or downloadable release is included yet.
+**Status:** [METRIC8: NoTHX](addons/nothx/README.md) is available for in-game testing. Range Indicator is at the requirements stage.
 
 ## Start here
 
