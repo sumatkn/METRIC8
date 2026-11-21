@@ -1,6 +1,6 @@
 # Suite working memory
 
-Updated: 2026-11-20.
+Updated: 2026-11-21.
 
 ## Current objective
 
@@ -18,7 +18,7 @@ The public repository contained README.md and an MIT LICENSE only. There was no 
 - A reusable project template defines source, docs, assets, and distribution sections.
 - Range Indicator has a requirements-only section based on the supplied discussion context.
 - Database tooling is listed as a candidate; its previous files and architecture have not been imported.
-- No implementation, release, branch protection, or automation has been configured.
+- [METRIC8: NoTHX](../../addons/nothx/README.md) implements the unspent talent reminder filter. In-game verification is pending.
 
 ## Confirmed constraints
 
@@ -40,7 +40,7 @@ Resolve the initial roster and distribution policy, then import the selected pro
 
 ## Validation and limits
 
-Foundation validation covers relative documentation links and preservation of the existing license. There is no executable code to test and no in-game compatibility claim.
+Foundation validation covers relative documentation links and preservation of the existing license. See project memory for addon-specific verification.
 
 ## Handoff maintenance
 

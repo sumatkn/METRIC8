@@ -1,10 +1,11 @@
 # METRIC8 project list
 
-Updated: 2026-11-16.
+Updated: 2026-11-21.
 
 | Project | Type | Status | Home | Distribution |
 | --- | --- | --- | --- | --- |
 | METRIC8 Suite | Umbrella | Foundation established | [Suite scope](SCOPE.md) | No suite package |
+| METRIC8: NoTHX | Addon | Testing | [Reminder filters](../addons/nothx/README.md) | [Install](../addons/nothx/dist/README.md) |
 | Range Indicator (working name) | Addon | Requirements captured; suite inclusion proposed | [Project section](../addons/range-indicator/README.md) | [Download section](../addons/range-indicator/dist/README.md); no build |
 | Localized database / addon data tooling (working description) | Supporting tool | Candidate; scope and inclusion need confirmation | Not imported | None |
 
