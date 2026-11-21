@@ -15,6 +15,10 @@ A local Lua 5.2 mock loaded all files in TOC order and exercised startup, period
 
 The maintainer saw a ranged indication on a Hunter and reported difficulty distinguishing melee and the dead zone. A Forever addon author reported that Raptor Strike can answer in range well outside melee reach, while Wing Clip changes its answer at melee reach. This revision uses Wing Clip once learned and retains the existing Auto Shot check. It also makes no target, a nonattackable target and an unavailable range visibly distinct. No new client APIs were added. This revision was reviewed against source and reported behavior. Gameplay verification is pending with the maintainer. [Forever range probe observations](https://github.com/Nedyar/NameplateDistance/blob/main/Range.lua#L103)
 
+## Line-of-sight and melee feedback (0.1.2-dev)
+
+RangeCheck listens to `UI_ERROR_MESSAGE` and recognizes the client's localized line-of-sight error text. The event supplies an error and has no unit argument. The corner badge reports a recent error for two seconds and clears when the target changes. The client export did not expose a continuous target line-of-sight query. A quiet auto-attack cannot establish why no damage occurred. Forever addon authors also report that passive range reads for Attack (6603) and next-swing attacks can give false positives, so the Hunter melee probe remains Wing Clip. The reported X does not match a bundled 0.1.1 label; `/rangecheck status` reports the loaded version, computed status and probe results for follow-up. Source review only for this revision. [Forever melee observations](https://github.com/wealdly/JustAC/blob/main/BlizzardAPI/StateHelpers.lua)
+
 ## In-game smoke test pending
 
 1. Confirm `/dump GetBuildInfo()` and `/dump select(4, GetBuildInfo())`, then install from source and check login for Lua errors.

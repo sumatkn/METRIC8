@@ -17,6 +17,16 @@ strip:SetColorTexture(0, 0, 0, 0.85)
 local label = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall", 2)
 label:SetPoint("CENTER", strip)
 
+local sightBadge = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall", 2)
+sightBadge:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -2, -2)
+sightBadge:SetText("LOS!")
+sightBadge:SetTextColor(1, 0.4, 0.30)
+sightBadge:Hide()
+
+function addon.ShowSightWarning(visible)
+    sightBadge:SetShown(visible)
+end
+
 local dragProfile
 local function finishDrag()
     if not dragProfile then return end

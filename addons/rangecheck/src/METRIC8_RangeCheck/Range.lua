@@ -72,12 +72,15 @@ local function rangedEquipment()
     return "other"
 end
 
-function addon.GetRangeStatus(class)
+function addon.GetRangeStatus(class, details)
     local exists = read("boolean", UnitExists, "target")
     if exists == false then return "none" end
     if exists == nil then return "unknown" end
     local attackable = read("boolean", UnitCanAttack, "player", "target")
     local dead = read("boolean", UnitIsDeadOrGhost, "target")
+    if details then
+        details[#details + 1] = "attackable=" .. tostring(attackable) .. ", dead=" .. tostring(dead)
+    end
     if attackable == false or dead == true then return "invalid" end
     if attackable == nil or dead == nil then return "unknown" end
 
@@ -90,10 +93,16 @@ function addon.GetRangeStatus(class)
         if kind == ranged or kind == wand then equipment = rangedEquipment() end
         if kind == melee or kind == spell or equipment == kind then
             local result = probeSpell(probe[1])
+            if details then
+                details[#details + 1] = kind .. " (" .. probe[1] .. ")=" .. tostring(result)
+            end
             if result == true then return kind end
             if result == false then checked = true else uncertain = true end
-        elseif not equipment then
-            uncertain = true
+        else
+            if details then
+                details[#details + 1] = kind .. " equipment=" .. tostring(equipment)
+            end
+            if not equipment then uncertain = true end
         end
     end
     if checked and not uncertain then return "out" end

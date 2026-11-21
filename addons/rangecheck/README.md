@@ -16,7 +16,7 @@ One movable, scalable icon shows the current target's range for selected attacks
 
 Hunters use learned Wing Clip for melee and Auto Shot for ranged weapon range. If Wing Clip is unavailable, or Auto Shot cannot distinguish too close from too far, a result may remain Unknown.
 
-Range is based on the client’s spell checks. The icon conveys no information about facing, cooldowns, line of sight, or whether you can cast right now.
+Range is based on the client’s spell checks. A red `LOS!` in the upper-right corner shows a recent line-of-sight error from WoW independently of the range label. The badge clears after two seconds or a target change. The UI error does not identify the affected unit, and an empty corner means no recent error was observed. RangeCheck does not start attacks or check facing.
 
 ## Commands
 
@@ -24,6 +24,7 @@ Enter `/rangecheck` for help. Use the commands in the table after `/rangecheck`.
 
 | Command | Effect |
 | --- | --- |
+| `status` | Print the loaded addon version, current range state and available probe results in chat. |
 | `unlock`, `lock` | Enable left-dragging or lock the icon. |
 | `scale 1.25` | Set scale from 0.5 to 2. Use `scale inherit` to clear it. |
 | `resetpos` | Clear the saved position at the selected scope. |

@@ -1,6 +1,21 @@
-local _, addon = ...
+local addonName, addon = ...
 local events = CreateFrame("Frame")
 local class, profile, lastStatus
+local sightWarning = 0
+
+local function clearSightWarning()
+    sightWarning = 0
+    addon.ShowSightWarning(false)
+end
+
+local function noteError(errorText)
+    if issecretvalue and issecretvalue(errorText) then return end
+    if type(errorText) ~= "string" or errorText == "" then return end
+    if errorText == SPELL_FAILED_LINE_OF_SIGHT or errorText == ERR_LINE_OF_SIGHT then
+        sightWarning = 2
+        addon.ShowSightWarning(true)
+    end
+end
 
 local function update()
     local status = addon.GetRangeStatus(class)
@@ -23,6 +38,14 @@ end
 
 local function options(input)
     local command, value = input:lower():match("^%s*(%S*)%s*(.-)%s*$")
+    if command == "status" then
+        local details = {}
+        local status = addon.GetRangeStatus(class, details)
+        local version = C_AddOns.GetAddOnMetadata(addonName, "Version")
+        message((version or "unknown version") .. " | " .. (class or "unknown class") .. " | " .. status)
+        if #details > 0 then message(table.concat(details, " | ")) end
+        return
+    end
     local target = addon.ActiveProfile()
     if command == "global" or command == "class" or command == "char" then
         if command == "global" then target = addon.global end
@@ -65,7 +88,7 @@ local function options(input)
     elseif command == "mode" and (value == "auto" or value == "overlay" or value == "replace" or value == "inherit") then
         if value == "inherit" then target.mode = nil else target.mode = value end
     else
-        message("/rangecheck unlock | lock [inherit] | resetpos | scale <0.5-2|inherit> | mode <auto|overlay|replace|inherit>")
+        message("/rangecheck status | unlock | lock [inherit] | resetpos | scale <0.5-2|inherit> | mode <auto|overlay|replace|inherit>")
         message("/rangecheck override <on|off> | [global|class|char] theme <id|inherit>")
         return
     end
@@ -73,7 +96,7 @@ local function options(input)
 end
 
 events:RegisterEvent("PLAYER_LOGIN")
-events:SetScript("OnEvent", function(self, event)
+events:SetScript("OnEvent", function(self, event, _, errorText)
     if event == "PLAYER_LOGIN" then
         class = addon.GetPlayerClass()
         addon.LoadProfiles(class)
@@ -82,11 +105,16 @@ events:SetScript("OnEvent", function(self, event)
         SlashCmdList.METRIC8_RANGECHECK = options
         self:UnregisterEvent(event)
         self:RegisterEvent("PLAYER_TARGET_CHANGED")
+        self:RegisterEvent("UI_ERROR_MESSAGE")
         self:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
         self:RegisterEvent("SPELLS_CHANGED")
         self:RegisterEvent("PLAYER_REGEN_DISABLED")
         self:RegisterEvent("PLAYER_REGEN_ENABLED")
         self:SetScript("OnUpdate", function(frame, elapsed)
+            if sightWarning > 0 then
+                sightWarning = sightWarning - elapsed
+                if sightWarning <= 0 then clearSightWarning() end
+            end
             frame.elapsed = (frame.elapsed or 0) + elapsed
             if frame.elapsed >= 0.2 then
                 frame.elapsed = 0
@@ -94,7 +122,10 @@ events:SetScript("OnEvent", function(self, event)
             end
         end)
         applyProfile()
+    elseif event == "UI_ERROR_MESSAGE" then
+        noteError(errorText)
     else
+        if event == "PLAYER_TARGET_CHANGED" then clearSightWarning() end
         update()
     end
 end)
