@@ -12,6 +12,6 @@ Updated: 2026-11-21.
 
 ## Actual status and next work
 
-Requirements and scaffold only. No source, theme assets, build, API verification, client tests or in-game confirmation. Continue components separately, beginning with Icon options if requested. Range checks, status priorities and unknown-target handling remain open. Run suite P-004 compatibility review before coding.
+Proof of concept 0.1.0-dev is installable from source. Reversible defaults are one visible, locked icon, overlay presentation, and preset class checks. Available positive results take precedence over Unknown; among positive results Hunter favors melee and casters favor spells over wands. Missing or ambiguous evidence displays Unknown. Hunter dead zone is reserved until both boundaries can be established. Per-character settings use the client's native storage.
 
-This was a naming, registry and documentation reconciliation only; not an implementation.
+[P-004 review and validation](COMPATIBILITY.md) covers Forever 1.60.1 build 71037, interface 16001, and the passing local Lua mock. Next action is the documented live-client smoke test, especially spellbook resolution, combat restrictions, ranged equipment and reload persistence. Distribution is source-only pending the package and release decisions.

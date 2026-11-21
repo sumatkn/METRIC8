@@ -1,15 +1,34 @@
 # METRIC8: RangeCheck
 
-**RangeCheck** is a confirmed METRIC8 suite addon for WoW: Forever. **Status: requirements only.** No implementation or build exists.
+**RangeCheck** is a WoW: Forever proof of concept. See the [source install instructions](dist/README.md) and the [compatibility review and smoke test](docs/COMPATIBILITY.md).
 
-It displays the player's effective attack-range status relative to their current target through one movable, scalable, themeable icon.
+One movable, scalable icon shows the current target's range for selected attacks. The Default theme uses placeholder Blizzard art and a colored status label. The icon starts locked and stays visible so its location is easy to find.
 
-## Components
+## Status labels
 
-- **Icon:** Movable, scalable, themeable, configurable presentation.
-- **Range Detection & Status:** Determines range and sends statuses for icon changes or overlays.
-- **Profiles:** Applies class defaults with optional character overrides.
-- **Theme packages:** Bundled Default plus optional external packages; users may override theme presentation defaults.
+| Label | Meaning |
+| --- | --- |
+| `M`, `R`, `S`, `W` | A preset melee attack, ranged weapon attack, offensive spell, or wand attack is in range. When both checks succeed, Hunter shows melee and wand-capable casters show spell. |
+| `OUT` | All applicable preset probes returned an interpretable negative. |
+| `?` | Evidence was unavailable or ambiguous. This includes Hunter Auto Shot failures where the client cannot distinguish too close from too far. |
+| `-`, `X` | No target, or a target that is dead or cannot be attacked. |
+
+Range is based on the client’s spell checks. The icon conveys no information about facing, cooldowns, line of sight, or whether you can cast right now.
+
+## Commands
+
+Enter `/rangecheck` for help. Use the commands in the table after `/rangecheck`.
+
+| Command | Effect |
+| --- | --- |
+| `unlock`, `lock` | Enable left-dragging or lock the icon. |
+| `scale 1.25` | Set scale from 0.5 to 2. Use `scale inherit` to clear it. |
+| `resetpos` | Clear the saved position at the selected scope. |
+| `mode auto`, `mode overlay`, `mode replace` | Use the theme's preference, keep the base art with overlays, or use status art when available. `mode inherit` clears the setting. |
+| `override on`, `override off` | Enable or disable this character's saved overrides. |
+| `theme <id>`, `theme inherit` | Select a registered theme or clear the assignment. Prefix with `global` for the shared theme, `class` for this class, or `char` for this character. |
+
+Edits and dragging default to class settings unless the character override is enabled. Prefix settings commands with `class` or `char` to edit that scope directly. Settings inherit from class to character, and themes resolve in order from enabled character to class to global to Default.
 
 ## Project sections
 
@@ -18,4 +37,4 @@ It displays the player's effective attack-range status relative to their current
 - [Distribution](dist/README.md)
 - [Changelog](CHANGELOG.md)
 
-`src/`, `assets/`, `docs/` and `dist/` are dedicated project areas. No code, artwork, distributable or in-game verification has been provided yet. Suite membership does not require a shared runtime.
+- [Source and theme registration](src/README.md)

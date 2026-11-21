@@ -7,10 +7,10 @@ Updated: 2026-11-21.
 | METRIC8 Suite | Umbrella | Foundation established | [Suite scope](SCOPE.md) | No suite package |
 | METRIC8: CampCant | Addon | Confirmed in game | [Songbook and player](../addons/campcant/README.md) | [Install](../addons/campcant/dist/README.md) |
 | METRIC8: NoTHX | Addon | Confirmed in game | [Reminder filters](../addons/nothx/README.md) | [Install](../addons/nothx/dist/README.md) |
-| METRIC8: RangeCheck | Addon | Confirmed member; requirements stage, no implementation | [Project section](../addons/rangecheck/README.md) | [Download section](../addons/rangecheck/dist/README.md); no build |
+| METRIC8: RangeCheck | Addon | Proof of concept; live smoke test pending | [Project section](../addons/rangecheck/README.md) | [Source install](../addons/rangecheck/dist/README.md) |
 | Localized database / addon data tooling (working description) | Supporting tool | Candidate; scope and inclusion need confirmation | Not imported | None |
 
-RangeCheck is a confirmed suite project. Its section is a requirements-only scaffold; no implementation or build exists. The database tooling entry is a candidate only; inspect its actual source documents before importing requirements or files.
+The database tooling entry is a candidate only. Inspect its actual source documents before importing requirements or files.
 
 ## Adding a project
 

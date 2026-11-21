@@ -16,7 +16,7 @@ The public repository contained README.md and an MIT LICENSE only. There was no 
 
 - Suite scope, project registry, collaboration rules, procedure register, decision register, and contributor instructions are established.
 - A reusable project template defines source, docs, assets, and distribution sections.
-- [METRIC8: RangeCheck](../../addons/rangecheck/README.md) is a confirmed suite member with requirements only, no source code or build.
+- [METRIC8: RangeCheck](../../addons/rangecheck/README.md) has a source-installable proof of concept targeting Forever 1.60.1 build 71037, interface 16001.
 - Database tooling is listed as a candidate; its previous files and architecture have not been imported.
 - [METRIC8: NoTHX](../../addons/nothx/README.md) implements the unspent talent reminder filter. The maintainer confirmed 0.1.0 in game.
 - [METRIC8: CampCant](../../addons/campcant/README.md) 0.1.6 ships ten songs and 156 verses. Mock playback passed. The maintainer confirmed 0.1.6 works in game.
@@ -33,15 +33,15 @@ The public repository contained README.md and an MIT LICENSE only. There was no 
 1. Confirm the remaining suite roster and names (RangeCheck, CampCant, NoTHX confirmed).
 2. Choose GitHub Release assets or committed distribution files.
 3. Choose whether substantive changes require a pull request.
-4. Verify the target client/build before implementation.
+4. Complete RangeCheck's live-client smoke test.
 
 ## Next action
 
-Continue RangeCheck requirements one component at a time. Address remaining roster and distribution policy separately. Before implementation, follow P-004.
+Run the [RangeCheck smoke test](../../addons/rangecheck/docs/COMPATIBILITY.md#in-game-smoke-test-pending). Address remaining roster and distribution policy separately.
 
 ## Validation and limits
 
-RangeCheck path and naming reconciled 2026-11-21; documentation-only, no client or gameplay testing. Foundation validation also covers links and existing license; see project memory.
+RangeCheck completed the P-004 source review and local Lua mock validation. In-game verification is pending. See the project compatibility note for test scope.
 
 ## Handoff maintenance
 
