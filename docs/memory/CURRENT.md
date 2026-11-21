@@ -18,7 +18,8 @@ The public repository contained README.md and an MIT LICENSE only. There was no 
 - A reusable project template defines source, docs, assets, and distribution sections.
 - Range Indicator has a requirements-only section based on the supplied discussion context.
 - Database tooling is listed as a candidate; its previous files and architecture have not been imported.
-- [METRIC8: NoTHX](../../addons/nothx/README.md) implements the unspent talent reminder filter. In-game verification is pending.
+- [METRIC8: NoTHX](../../addons/nothx/README.md) implements the unspent talent reminder filter. The maintainer confirmed 0.1.0 in game.
+- [METRIC8: CampCant](../../addons/campcant/README.md) 0.1.6 ships ten songs and 156 verses. Mock playback passed. In-game verification of this build is pending.
 
 ## Confirmed constraints
 
