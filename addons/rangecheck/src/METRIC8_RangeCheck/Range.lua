@@ -36,6 +36,22 @@ function addon.GetPlayerClass()
     end
 end
 
+local swingEventSeen, swingEventRange
+
+function addon.ClearMainHandEvent()
+    swingEventSeen, swingEventRange = nil, nil
+end
+
+function addon.NoteSwingRange(swingType, inRange, checked)
+    local types = Enum and Enum.PlayerSwingType
+    if not types or readable(swingType, "number") ~= types.MainHand then return end
+    swingEventSeen = true
+    swingEventRange = nil
+    if readable(checked, "boolean") == true then
+        swingEventRange = readable(inRange, "boolean")
+    end
+end
+
 local function probeMainHand()
     local swing = C_SwingTimer
     local swingTypes = Enum and Enum.PlayerSwingType
@@ -124,6 +140,11 @@ function addon.GetRangeStatus(class, details)
             local result, id
             if seed == mainHand then
                 result = probeMainHand()
+                if details then
+                    local eventState = swingEventSeen and tostring(swingEventRange) or "not received"
+                    details[#details + 1] = "melee query=" .. tostring(result) .. ", swing event=" .. eventState
+                end
+                if result == nil then result = swingEventRange end
             else
                 result, id = probeSpell(seed)
             end

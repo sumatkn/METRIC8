@@ -37,6 +37,10 @@ The timer's visual state collapses unchecked and in-range readings into the same
 
 Even with explicit melee and ranged negatives, the ranged negative does not identify which Auto Shot boundary failed. A defensible dead-zone result needs a separate upper-bound observation placing the target below Auto Shot's minimum range. Fixed item checks can provide approximate bands where available. In-game observations on NPCs and the variable melee reach reported by addon authors do not justify presenting those bands as exact attack boundaries. No executable or in-game test was performed for this investigation. [Item API](https://github.com/Gethe/wow-ui-source/blob/forever/Interface/AddOns/Blizzard_APIDocumentationGenerated/ItemDocumentation.lua) · [Measured range bands](https://www.curseforge.com/wow/addons/forever-rangefinder)
 
+## Event follow-up (0.1.6-dev)
+
+The maintainer reported the direct main-hand query still returned nil after following the built-in timer check. RangeCheck now listens to the public `PLAYER_SWING_RANGE_UPDATE` event while leaving the shared engine registration and timer settings to Blizzard. It accepts a readable boolean only when the event indicates a completed range check. Results are cleared on target, equipment, and world changes. Debug output distinguishes an event that has not arrived from one that arrived without a usable answer. This revision was source-reviewed only. The events still need in-game verification. [Event definition](https://github.com/Gethe/wow-ui-source/blob/forever/Interface/AddOns/Blizzard_APIDocumentationGenerated/SwingTimerDocumentation.lua#L49)
+
 ## In-game smoke test pending
 
 1. Confirm `/dump GetBuildInfo()` and `/dump select(4, GetBuildInfo())`, then install from source and check login for Lua errors.

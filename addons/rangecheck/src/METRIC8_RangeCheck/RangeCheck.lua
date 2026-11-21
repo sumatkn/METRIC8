@@ -120,7 +120,7 @@ local function options(input)
 end
 
 events:RegisterEvent("PLAYER_LOGIN")
-events:SetScript("OnEvent", function(self, event, _, errorText)
+events:SetScript("OnEvent", function(self, event, first, second, third)
     if event == "PLAYER_LOGIN" then
         class = addon.GetPlayerClass()
         addon.LoadProfiles(class)
@@ -129,6 +129,10 @@ events:SetScript("OnEvent", function(self, event, _, errorText)
         SlashCmdList.METRIC8_RANGECHECK = options
         self:UnregisterEvent(event)
         self:RegisterEvent("PLAYER_TARGET_CHANGED")
+        if class == "HUNTER" then
+            self:RegisterEvent("PLAYER_SWING_RANGE_UPDATE")
+            self:RegisterEvent("PLAYER_ENTERING_WORLD")
+        end
         self:RegisterEvent("UI_ERROR_MESSAGE")
         self:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
         self:RegisterEvent("SPELLS_CHANGED")
@@ -147,8 +151,14 @@ events:SetScript("OnEvent", function(self, event, _, errorText)
         end)
         applyProfile()
     elseif event == "UI_ERROR_MESSAGE" then
-        noteError(errorText)
+        noteError(second)
+    elseif event == "PLAYER_SWING_RANGE_UPDATE" then
+        addon.NoteSwingRange(first, second, third)
+        update()
     else
+        if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
+            addon.ClearMainHandEvent()
+        end
         if event == "PLAYER_TARGET_CHANGED" then
             clearSightWarning()
             lastDebugOutput = nil
