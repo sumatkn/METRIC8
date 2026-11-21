@@ -51,6 +51,12 @@ Blizzard’s published [UI Add-On Development Policy](https://us.forums.blizzard
 
 HunterRange's author describes using recent melee activity before Wing Clip is learned. `PLAYER_SWING` exposes swing type and duration, without a target or hit result. Such a receipt can support a separately labeled recent-swing indicator, but cannot establish live reach before an attack. No application or in-game test was run for this source review. [HunterRange author notes](https://www.curseforge.com/wow/addons/hunterrange) · [Forever swing event schema](https://github.com/Gethe/wow-ui-source/blob/forever/Interface/AddOns/Blizzard_APIDocumentationGenerated/SwingTimerDocumentation.lua#L39)
 
+## RangeDisplay comparison
+
+CurseForge lists RangeDisplay v6.3.7 for Forever. The tagged Lua calls `LibRangeCheck-3.0:GetRange(unit, checkVisible)` and displays lower/upper estimates. Its packaging metadata pulls LibRangeCheck from the upstream project. The visibility option uses `UnitIsVisible` and is not a line-of-sight check. RangeDisplay has no independent native swing-range signal. [Release](https://www.curseforge.com/wow/addons/range-display/files/9045366) · [Tagged source](https://github.com/mitchnull/RangeDisplay/blob/v6.3.7/RangeDisplay.lua#L399)
+
+The reviewed upstream LibRangeCheck source has separate Forever handling. Its hostile item list starts at nominal five yards and then ten yards; there is no eight-yard hostile item tier in that branch. An interaction fallback can use a nominal eight-yard duel check, but the preset varies by player race and the library adds interaction checks to that list only when no item checker was added. Its range search takes a falsy checker result as the outside branch, and its item wrapper merges false with nil. A returned range band is therefore an estimate for display, not an authoritative melee or dead-zone result. For RangeCheck, preserve separate direct attack states and use only observed probe responses for a labeled proximity estimate. This was a source review only. [Item tiers](https://github.com/WeakAuras/LibRangeCheck-3.0/blob/main/LibRangeCheck-3.0/LibRangeCheck-3.0.lua#L2084) · [Interaction thresholds](https://github.com/WeakAuras/LibRangeCheck-3.0/blob/main/LibRangeCheck-3.0/LibRangeCheck-3.0.lua#L140) · [Range search](https://github.com/WeakAuras/LibRangeCheck-3.0/blob/main/LibRangeCheck-3.0/LibRangeCheck-3.0.lua#L3959)
+
 ## In-game smoke test pending
 
 1. Confirm `/dump GetBuildInfo()` and `/dump select(4, GetBuildInfo())`, then install from source and check login for Lua errors.
