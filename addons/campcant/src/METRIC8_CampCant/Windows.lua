@@ -81,15 +81,13 @@ end
 
 local function commitFields()
     draft.title = C.clean(editor.title:GetText())
-    local delay = C.clean(editor.delay:GetText())
-    draft.verses[editPage] = {C.clean(editor.line:GetText()), delay ~= "" and delay or nil}
+    draft.verses[editPage] = {C.clean(editor.line:GetText())}
 end
 
 local function editView()
     local verse = draft.verses[editPage]
     editor.title:SetText(draft.title)
     editor.line:SetText(verse[1])
-    editor.delay:SetText(tostring(verse[2] or ""))
     editor.index:SetText(("Verse %d of %d"):format(editPage, #draft.verses))
     editor.prev:SetEnabled(editPage > 1)
     editor.next:SetEnabled(editPage < #draft.verses)
@@ -102,7 +100,7 @@ local function openEditor(copy)
     editing = source and selected > #C.builtins and selected - #C.builtins or nil
     draft = {title = source and source.title or "", verses = {}}
     if source then
-        for i, v in ipairs(source.verses) do draft.verses[i] = {v[1], v[2]} end
+        for i, v in ipairs(source.verses) do draft.verses[i] = {v[1]} end
         if not editing then draft.title = draft.title .. " (my version)" end
     else
         draft.verses[1] = {""}
@@ -157,7 +155,7 @@ local function build()
     button(book, 16, 260, 132, "Rehearse privately", function() play(false) end)
     button(book, 158, 260, 132, "Select song", function() play(true) end)
 
-    editor = panel("METRIC8_CampCantEditor", 460, 330, 0)
+    editor = panel("METRIC8_CampCantEditor", 460, 288, 0)
     label(editor, 16, 14, 400, "GameFontNormalLarge"):SetText("Edit song")
     label(editor, 16, 46, 70):SetText("Title")
     editor.title = field(editor, 80, 40, 364, 27)
@@ -181,11 +179,9 @@ local function build()
     end)
     editor.line = field(editor, 16, 112, 428, 84, true)
     editor.line:SetMaxLetters(255)
-    label(editor, 16, 215, 305):SetText("Seconds to hold (blank = automatic)")
-    editor.delay = field(editor, 348, 208, 96, 26)
-    editor.feedback = label(editor, 16, 248, 428, "GameFontNormal")
-    button(editor, 16, 283, 102, "Save song", save)
-    button(editor, 125, 283, 134, "Discard edits", finishEdit)
+    editor.feedback = label(editor, 16, 205, 428, "GameFontNormal")
+    button(editor, 16, 242, 102, "Save song", save)
+    button(editor, 125, 242, 134, "Discard edits", finishEdit)
 
     local p = panel("METRIC8_CampCantPlayer", 316, 104, -150)
     p:ClearAllPoints()
@@ -212,13 +208,11 @@ local function build()
     p.voice:SetScript("OnClick", function(self) C.setVoice(self:GetChecked() and true or false) end)
     p.start = button(p, 12, 68, 84, "Start", function()
         C.start(songAt(selected), true)
-        C.sing()
     end)
     p.sing = button(p, 101, 68, 110, "Next Verse", C.sing)
     p.stop = button(p, 216, 68, 88, "Stop", C.stop)
     p.line = label(p, 14, 102, 288)
     p.status = label(p, 14, 183, 288, "GameFontNormalSmall")
-    p:SetScript("OnUpdate", C.tick)
     p:RegisterEvent("PLAYER_LEAVING_WORLD")
     p:SetScript("OnEvent", function() C.stop(); p:Hide() end)
     C.showIdle()
